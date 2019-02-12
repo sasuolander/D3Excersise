@@ -8,7 +8,7 @@ import {Footer} from './component/elements/Footer'
 import {Header} from './component/elements/Header'
 //global namespace
 const API_URL ="https://gist.githubusercontent.com/sasuolander/54feb87d8a2ecf03e32e5e03d61aaf2a/raw/622dcf7f9758449a5230f4a042f582d8c65309a0/data.csv";
-class App extends Component {
+export default class App extends Component {
   constructor(props){
     super(props);
     this.state = ({
@@ -19,7 +19,7 @@ class App extends Component {
     //this.onClick=this.onClick.bind(this);
   }
 
-  loadData(){
+  loadData=()=>{
     console.log("loadData() function load")
     Axios.get(API_URL).then(res=>{
       console.log(res)
@@ -33,8 +33,8 @@ class App extends Component {
   }
 
   
-//handleClick(){}
-//onClick(){}
+handleClick=(event)=>{}
+onClick=(event)=>{}
 
 
 
@@ -66,5 +66,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
