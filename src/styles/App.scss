@@ -1,8 +1,36 @@
 @import "~react-vis/dist/style";
 
 .test_box {
-  width: 500px;
-  height: 500px;
   color: black;
   border: 1px solid
+}
+
+.path {
+  color: black;
+}
+
+.tick {
+  color: black;
+}
+
+.line {
+  fill: none;
+  stroke: black;
+}
+.diagram {
+  padding: 0 0 300px 20px;
+  text-align: center;
+
+}
+
+.axis--x {
+  padding: 0px 0px 0px 0px;
+  margin-left: auto;
+}
+.axis--y {
+  padding: 0 0 0 50px;
+}
+
+.testingFile {
+  color: aqua;
 }

@@ -1,95 +1,110 @@
 import React, {Component} from 'react'
 import "./../../styles/App.scss"
 import {scaleLinear, scaleTime} from 'd3-scale'
-import {axisBottom,axisLeft,axisRight,axisTop} from "d3-axis";
-import {select,selectAll} from "d3-selection";
+import {axisBottom, axisLeft} from "d3-axis";
+import {select} from "d3-selection";
 import {line} from "d3-shape";
-
-class DefaultDiagram extends Component {
-constructor(props){
-    super(props);
-    this.state={
-
-
-            //margin : [{top: 20}, {right: 20}, {bottom: 110}, {left:100 }],
-            width :500,
-            height : 500,
-
-
-        dataTest:[{x: 0, y: 8},
-            {x: 1, y: 5},
-            {x: 2, y: 4},
-            {x: 3, y: 9},
-            {x: 4, y: 1},
-            {x: 5, y: 7},
-            {x: 6, y: 6},
-            {x: 7, y: 3},
-            {x: 8, y: 2},
-            {x: 9, y: 0}],
-};
-
-}
-    componentDidMount() {
-this.createBarChart()
-
+import {max, extent} from "d3-array";
+import {format} from "d3-format";
+import PropTypes from 'prop-types';
+//https://embed.plnkr.co/plunk/WjmCzZ
+export default class DefaultDiagram extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            //standard d3 marginals and dimensions
+            margin: {top: 30, right: 20, bottom: 110, left: 50},
+            width: 960,
+            height: 500,
+        }
     }
-     componentDidUpdate() {
-         this.createBarChart()
 
-     }
+    componentDidMount() {
+        this.createBarChart(this.props.data)
+    }
 
-    createBarChart=()=>{
+    componentDidUpdate() {
+        this.createBarChart(this.props.data)
+    }
 
-    const   xScale=scaleTime().rangeRound([0,this.state.width]),
-            yScale=scaleLinear().rangeRound(this.state.height)
-        //.domain([yLimits.min, yLimits.max])
-            .rangeRound([this.state.height, 0]),
-            xAxis = axisBottom(xScale),
-            yAxis = axisLeft(yScale),
-            valueline= line().x(
-                (d)=>{return d}
-            ).y((d)=>{return d}),
+    createArrayForD3 = (data) => {
+        let inputData = data.measurement;
+        let array = [];
+        inputData.forEach((obj) => {
+            array.push({
+                year: obj[0],
+                value: obj[1]
+            })
+        });
+        return array
+    };
+
+    createBarChart = (data) => {
+        //stop drawing if data is undefined,componenDidUpdate
+        // is going to try render it again when data is defined
+        if (data === undefined) {
+            return "error"
+        }
+        let array = this.createArrayForD3(data);
+        const size = array.length;
+        const {margin, height, width} = this.state;
+        const widthUsed = width - margin.left - margin.right,
+            heightUsed = height - margin.top - margin.bottom;
         //node represent svg element
-            node = this.node;
-        //     csv(this.props.data).then(function (data) {
-        //         console.log(data)
-        //
-        //     }).catch((err)=>{
-        //         console.log(err)
-        // });
+        const node = this.node;
+        const MasterElement = select(node).append('g')
+            .attr('transform', 'translate('
+                + margin.left + ' ' + margin.right + ')');
 
+        const xScale = scaleTime().rangeRound([0, widthUsed]),
+            yScale = scaleLinear().rangeRound([heightUsed, 0]),
+            xAxis = axisBottom(xScale).ticks(size / 2).tickFormat(format("d")),
+            yAxis = axisLeft(yScale);
 
-        select(node).append("g").attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + this.state.height + ")")
+        const valueline = line().x((d) => {
+                return xScale(d.year)
+            }
+        ).y((d) => {
+            return yScale(d.value)
+        });
+
+        xScale.domain(extent(array, (d) => {
+            //console.log("XScale "+d.year)
+            return d.year
+        }));
+        yScale.domain([0, max(array, (d) => {
+            //console.log("YScale "+d.value)
+            return d.value
+        })]);
+
+        MasterElement.append('path').datum(array)
+            .attr("class", "line")
+            .attr("d", valueline);
+
+        MasterElement.append("g").attr("class", "axis--x")
+            .attr("transform", "translate(0," + heightUsed + ")")
             .call(xAxis);
-        select(node).append("g")
-            .attr("class", "axis axis--y")
+        MasterElement.append("g")
+            .attr("class", "axis--y")
+            .attr("transform", "translate(0," + 0 + ")")
+            //.attr("transform", "rotate("+0+")")
+            //.attr('opacity',"1")
             .call(yAxis);
+    };
 
-        // select(node).selectAll('line').data(this.props.data).enter()
-};
-
-
-
-
-     render (
-    ){
-
-
-        return(
-            // <div className = "test_box ">
-            <div className = " ">
-            
-                        <p>{this.props.test}</p>
-                            <svg width={this.state.width+40}
-                                 height={this.state.height+40}
-                                 ref={node =>this.node = node}
-                            ></svg>
-
-                        
-                    </div>
+    render() {
+        //const {margin, height, width} = this.state;
+        const {height, width} = this.props;
+        return (
+            <svg width={width}
+                 height={height}
+                //viewBox={"0 0 0 0"}
+                //transform={translate}
+                 ref={node => this.node = node}>
+            </svg>
         );
     }
 }
-
-export default DefaultDiagram
+DefaultDiagram.PropsTypes = {
+    data: PropTypes.array
+};
