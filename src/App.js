@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import SearchBar from './component/SearchBar'
+import {SearchBar} from './component/SearchBar'
 //import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid';
 import DefaultDiagram from './component/resultdiagram/DefaultDiagram'
@@ -52,7 +52,7 @@ export default class App extends Component {
         return array
     };
 
-    handleChange(event) {
+    handleChange=(event)=> {
         console.log("input");
         console.log(event.target.value)
     };
@@ -71,7 +71,8 @@ export default class App extends Component {
     render() {
 
         //const diagram = this.state.data.filter(()=>{});
-        return <div className="classes.root">
+        return (
+        <div className="classes.root">
             <Grid container justify='center'
                   direction='column'
                   alignItems='center'
@@ -85,13 +86,14 @@ export default class App extends Component {
                     />
                 </Grid>
                 <SearchBar items={this.state.testArray}
-                           onChange={() => this.handleChange()}
-                           placeholder={"test"}
+                           //onChange={(event) => this.handleChange(event)}
+                           placeholder="test"
                 />
                 <button onClick={this.loadData}>loadData</button>
                 <button onClick={() => console.log(this.state.data[1].name)}>Test data state</button>
                 <Footer/>
             </Grid>
-        </div>;
+        </div>
+        );
     }
 }
