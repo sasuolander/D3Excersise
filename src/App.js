@@ -15,7 +15,8 @@ export default class App extends Component {
         this.state = ({
             data: [],
             filtered: [],
-            testArray:   ['React Vienna', 'React Finland', 'Jest', 'Enzyme', 'Reactjs']
+            testArray:   ['React Vienna', 'React Finland', 'Jest', 'Enzyme', 'Reactjs'],
+            countryArray:[]
         });
 
         //when using arrow function, binding is not needed
@@ -36,6 +37,11 @@ export default class App extends Component {
         });
     };
 
+
+
+    SearchIndexByCountry=(array,country)=>{
+
+    };
     createGeneralArray = (dataRes) => {
         const array = csvParse(dataRes, (data) => {
             return {
@@ -63,6 +69,7 @@ export default class App extends Component {
 
     componentDidMount() {
         this.loadData()
+
     }
 
     componentWillMount() {
@@ -85,7 +92,7 @@ export default class App extends Component {
                                     height={450}
                     />
                 </Grid>
-                <SearchBar items={this.state.testArray}
+                <SearchBar data={this.state.data}
                            //onChange={(event) => this.handleChange(event)}
                            placeholder="test"
                 />
