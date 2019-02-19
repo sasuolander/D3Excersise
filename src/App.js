@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {SearchBar} from './component/SearchBar'
+import SearchBar from './component/SearchBar'
 //import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid';
 import DefaultDiagram from './component/resultdiagram/DefaultDiagram'
@@ -14,7 +14,8 @@ export default class App extends Component {
         super(props);
         this.state = ({
             data: [],
-            filtered: []
+            filtered: [],
+            testArray:   ['React Vienna', 'React Finland', 'Jest', 'Enzyme', 'Reactjs']
         });
 
         //when using arrow function, binding is not needed
@@ -28,14 +29,14 @@ export default class App extends Component {
             //console.log(res.data)
             const dataRes = res.data;
             this.setState({
-                data: this.createGenralArray(dataRes)
+                data: this.createGeneralArray(dataRes)
             })
         }).catch(err => {
             return console.log(err)
         });
     };
 
-    createGenralArray = (dataRes) => {
+    createGeneralArray = (dataRes) => {
         const array = csvParse(dataRes, (data) => {
             return {
                 name: data.CountryName,
@@ -70,26 +71,27 @@ export default class App extends Component {
     render() {
 
         //const diagram = this.state.data.filter(()=>{});
-        return (
-            <div className="classes.root">
-                <Grid container justify='center'
-                      direction='column'
-                      alignItems='center'
-                      spacing='24'
-                >
-                    <Header viesti='header'/>
-                    <SearchBar input="testi" onChange={() => this.handleChange()}/>
-                    <Grid item xs='12'>
-                        <DefaultDiagram test="test" data={this.state.data[1]}
-                                        width={960}
-                                        height={450}
-                        />
-                    </Grid>
-                    <button onClick={this.loadData}>loadData</button>
-                    <button onClick={() => console.log(this.state.data[1].name)}>Test data state</button>
-                    <Footer/>
+        return <div className="classes.root">
+            <Grid container justify='center'
+                  direction='column'
+                  alignItems='center'
+                  spacing='24'
+            >
+                <Header viesti='header'/>
+                <Grid item xs='12'>
+                    <DefaultDiagram test="test" data={this.state.data[1]}
+                                    width={960}
+                                    height={450}
+                    />
                 </Grid>
-            </div>
-        );
+                <SearchBar items={this.state.testArray}
+                           onChange={() => this.handleChange()}
+                           placeholder={"test"}
+                />
+                <button onClick={this.loadData}>loadData</button>
+                <button onClick={() => console.log(this.state.data[1].name)}>Test data state</button>
+                <Footer/>
+            </Grid>
+        </div>;
     }
 }
