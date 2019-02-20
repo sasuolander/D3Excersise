@@ -15,12 +15,12 @@ export default class App extends Component {
         this.state = ({
             data: [],
             filtered: [],
-            testArray:   ['React Vienna', 'React Finland', 'Jest', 'Enzyme', 'Reactjs'],
-            countryArray:[]
+            inputValue:''
+
         });
 
         //when using arrow function, binding is not needed
-        this.loadData = this.loadData.bind(this);
+        //this.loadData = this.loadData.bind(this);
         //this.onClick=this.onClick.bind(this);
     }
 
@@ -36,10 +36,9 @@ export default class App extends Component {
             return console.log(err)
         });
     };
-
-
-
     SearchIndexByCountry=(array,country)=>{
+        const names = array.map((data) => data.name);
+        return names;
 
     };
     createGeneralArray = (dataRes) => {
@@ -58,26 +57,28 @@ export default class App extends Component {
         return array
     };
 
-    handleChange=(event)=> {
-        console.log("input");
-        console.log(event.target.value)
+    onChange = e =>{
+        console.log("capture change");
+        //console.log(e.target.value);
     };
 
-//onClick=(event)=>{}
-    componentDidUpdate() {
+    onClick=e=>{
+       // e.preventDefault()
+    console.log("click")
     }
+
+    componentDidUpdate() {}
 
     componentDidMount() {
         this.loadData()
-
     }
 
-    componentWillMount() {
-    }
+    componentWillMount() {}
 
     render() {
 
         //const diagram = this.state.data.filter(()=>{});
+        const {data,inputValue} = this.state;
         return (
         <div className="classes.root">
             <Grid container justify='center'
@@ -87,17 +88,20 @@ export default class App extends Component {
             >
                 <Header viesti='header'/>
                 <Grid item xs='12'>
-                    <DefaultDiagram test="test" data={this.state.data[1]}
+                    <DefaultDiagram test="test" data={data[1]}
                                     width={960}
                                     height={450}
                     />
                 </Grid>
-                <SearchBar data={this.state.data}
-                           //onChange={(event) => this.handleChange(event)}
-                           placeholder="test"
+                <SearchBar data={data}
+                           onChange={this.onChange()}
+                            //handleChange={()=>this.handleChange()}
+                       placeholder="test"
+                           //inputValue={inputValue}
+                           onClick={this.onClick()}
                 />
                 <button onClick={this.loadData}>loadData</button>
-                <button onClick={() => console.log(this.state.data[1].name)}>Test data state</button>
+                <button onClick={() => console.log(data[1].name)}>Test data state</button>
                 <Footer/>
             </Grid>
         </div>
