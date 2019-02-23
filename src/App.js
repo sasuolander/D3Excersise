@@ -15,7 +15,9 @@ export default class App extends Component {
         this.state = ({
             data: [],
             filtered: [],
-            inputValue:''
+            inputValue: '',
+            indexValue: -1,
+            initialIndexValue: 1
 
         });
 
@@ -36,11 +38,12 @@ export default class App extends Component {
             return console.log(err)
         });
     };
-    SearchIndexByCountry=(array,country)=>{
-        const names = array.map((data) => data.name);
-        return names;
 
+    SearchIndexByCountry = (array, country) => {
+        const names = array.map((data) => data.name.toLowerCase());
+        return names.findIndex(name => name === country.toLowerCase());
     };
+
     createGeneralArray = (dataRes) => {
         const array = csvParse(dataRes, (data) => {
             return {
@@ -57,54 +60,89 @@ export default class App extends Component {
         return array
     };
 
-    onChange = e =>{
-        console.log("capture change");
-        //console.log(e.target.value);
+    onChange = (e) => {
+        e.preventDefault()
+        //console.log("capture change");
+
+
+    };
+    handleChangeState = (e, downShiftState) => {
+        //console.log("capture change");
+        console.log(downShiftState.inputValue);
+        this.setState({
+            inputValue: downShiftState.inputValue
+        })
+
     };
 
-    onClick=e=>{
-       // e.preventDefault()
-    console.log("click")
-    }
+    onSubmit = (e) => {
+        e.preventDefault()
+        console.log('click')
+        const {data, inputValue} = this.state,
+            indexValueOfCountry = this.SearchIndexByCountry(data, inputValue)
+        try {
+            this.setState(
+                {indexValue: indexValueOfCountry}
+            )
+            this.forceUpdate()
+        } catch (error) {
+            console.log('errro', error)
+        }
+    };
 
-    componentDidUpdate() {}
+    // itemToString=(i) =>{
+    //     return i ? i.name : ''
+    // }
+
+    componentDidUpdate() {
+    }
 
     componentDidMount() {
         this.loadData()
     }
 
-    componentWillMount() {}
+    componentWillMount() {
+    }
 
     render() {
 
         //const diagram = this.state.data.filter(()=>{});
-        const {data,inputValue} = this.state;
+        const {data, inputValue, indexValue, initialIndexValue} = this.state;
+        const diagram = indexValue <= -1 ?
+            <DefaultDiagram test="test" data={data[initialIndexValue]}
+                            width={960}
+                            height={450}/>
+            :
+            <DefaultDiagram test="test" data={data[indexValue]}
+                            width={960}
+                            height={450}/>
+        ;
         return (
-        <div className="classes.root">
-            <Grid container justify='center'
-                  direction='column'
-                  alignItems='center'
-                  spacing='24'
-            >
-                <Header viesti='header'/>
-                <Grid item xs='12'>
-                    <DefaultDiagram test="test" data={data[1]}
-                                    width={960}
-                                    height={450}
+            <div className="classes.root">
+                <Grid container justify='center'
+                      direction='column'
+                      alignItems='center'
+                      spacing='24'
+                >
+                    <Header viesti='header'/>
+                    <Grid item xs='12'>
+                        {diagram}
+                    </Grid>
+                    <SearchBar data={data}
+                               onChange={this.onChange}
+                               onStateChange={this.handleChangeState}
+                               placeholder="test"
+                        //inputValue={inputValue}
+                               onSubmit={this.onSubmit}
+                               itemToStrong={this.itemToString}
                     />
+                    <button onClick={this.loadData}>loadData</button>
+                    <button onClick={() => console.log(data[initialIndexValue].name)}>Test data state</button>
+                    <button onClick={() => console.log(this.SearchIndexByCountry(data, 'afghanistan'))}>Test function
+                    </button>
+                    <Footer/>
                 </Grid>
-                <SearchBar data={data}
-                           onChange={this.onChange()}
-                            //handleChange={()=>this.handleChange()}
-                       placeholder="test"
-                           //inputValue={inputValue}
-                           onClick={this.onClick()}
-                />
-                <button onClick={this.loadData}>loadData</button>
-                <button onClick={() => console.log(data[1].name)}>Test data state</button>
-                <Footer/>
-            </Grid>
-        </div>
+            </div>
         );
     }
 }

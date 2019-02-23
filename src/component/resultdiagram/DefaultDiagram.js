@@ -16,6 +16,7 @@ export default class DefaultDiagram extends Component {
             margin: {top: 30, right: 20, bottom: 110, left: 50},
             width: 960,
             height: 500,
+            isLoaded:0
         }
     }
 
