@@ -9,7 +9,8 @@ export const SearchBar = ({
                               inputValue,
                               itemToString,
                                 onSubmit,
-                              onStateChange
+                              onStateChange,
+
 
                           }) => {
     const names = data.map((data) => data.name); // create array from data,
@@ -18,6 +19,7 @@ export const SearchBar = ({
     return (
         <Downshift
             //onChange={onChange}
+            //selectedItem={selectedItem}
             itemToString={itemToString}            //inputValue={inputValue}
             onStateChange={onStateChange}
         >
