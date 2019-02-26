@@ -8,40 +8,35 @@ export const SearchBar = ({
                               onClick,
                               inputValue,
                               itemToString,
-                                onSubmit,
+                              onSubmit,
                               onStateChange,
-
-
                           }) => {
     const names = data.map((data) => data.name); // create array from data,
     // this might be redundant but it make code more readably
-    //console.log("test ", onClick)
     return (
         <Downshift
             //onChange={onChange}
             //selectedItem={selectedItem}
-            itemToString={itemToString}            //inputValue={inputValue}
-            onStateChange={onStateChange}
-        >
+            itemToString={itemToString}
+            onStateChange={onStateChange}>
             {({
-                  getInputProps, // Props to pass to our input
-                  getItemProps,  // Props to pass into each of the suggested items
-                  isOpen, // Whether the "suggestions box" is visible or not
+                  getInputProps,
+                  getItemProps,
+                  isOpen,
                   isActive,
-                  inputValue,   // Value that the user typed in the search box
-                  selectedItem,  // Item that is currently selected in the list (when hovering)
+                  inputValue,
+                  selectedItem,
                   clearSelection,
-                  highlightedIndex, // Index of the item currently selected in the list
+                  highlightedIndex,
                   getLabelProps,
                   itemToString,
-
               }) => (
                 <div>
                     <form onSubmit={onSubmit}>
                         <label {...getLabelProps()}>test</label> &nbsp;
                         <input {...getInputProps({
                             isOpen,
-                            onChange:onChange,
+                            onChange: onChange,
                             placeholder: placeholder //In DownShift you need to write everything
                             // inside props of downshift
                         })} />
@@ -54,7 +49,7 @@ export const SearchBar = ({
                             {names
                                 .filter(
                                     name => !inputValue || name.toLowerCase() //Search name from array
-                                .includes(inputValue.toLowerCase()),)
+                                        .includes(inputValue.toLowerCase()),)
                                 .slice(0, 5)//show only limited number of element
                                 .map((item, index) => (
                                     <div
@@ -80,5 +75,3 @@ export const SearchBar = ({
         </Downshift>
     )
 };
-
-//export default SearchBar

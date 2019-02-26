@@ -7,6 +7,7 @@ import Axios from 'axios';
 import {Footer} from './component/elements/Footer'
 import {Header} from './component/elements/Header'
 import {csvParse} from "d3-dsv";
+//import {format} from 'd3-format'
 //import DefaultDiagramTest2 from "./component/resultdiagram/DefaultDiagramTest2";
 //global namespace
 const API_URL = "https://gist.githubusercontent.com/sasuolander/54feb87d8a2ecf03e32e5e03d61aaf2a/raw/30ee2a2e22dbeac645ae55b0df7aa2bdd59307c7/data.csv";
@@ -15,12 +16,11 @@ export default class App extends Component {
         super(props);
         this.state = ({
             data: [],
-            filtered: [],
             inputValue: '',
             indexValue: -1,
             initialIndexValue: 1,
             //standard d3 marginals and dimensions
-            margin: {top: 20, right: 0, bottom: 0, left: 50},
+            margin: {top: 20, right: 0, bottom: 50, left: 70},
             widthMargin: 960,
             heightMargin: 500,
         });
@@ -72,7 +72,7 @@ export default class App extends Component {
     };
 
     createArrayForD3 = (data) => {
-        if (data == undefined) {
+        if (data === undefined) {
             return 'error'
         }
         let inputData = data.measurement;
@@ -81,7 +81,7 @@ export default class App extends Component {
         inputData.forEach((obj) => {
             array.push({
                 year: obj[0],
-                value: obj[1]
+                value:obj[1],
             })
         });
         return array
@@ -128,23 +128,20 @@ export default class App extends Component {
                             margin={margin}
                             heightUsed={MarginH}
                             widthUsed={MarginW}
-            />
-            :
+            /> :
             <DefaultDiagram test="test" data={this.createArrayForD3(data[indexValue])}
                             width={MarginWNegate}
                             height={MarginHNegate}
                             margin={margin}
                             heightUsed={MarginH}
-                            widthUsed={MarginW}
-            />
+                            widthUsed={MarginW}/>;
         return (
             <div className="classes.root">
                 <Grid container justify='center'
                       direction='column'
                       alignItems='center'
-                      spacing='24'
-                >
-                    <Header title='CO value'/>
+                      spacing='24'>
+                    <Header title='CO2 value'/>
                     <Grid item xs='12'>
                         {diagram}
                     </Grid>
@@ -152,16 +149,8 @@ export default class App extends Component {
                                onChange={this.onChange}
                                onStateChange={this.handleChangeState}
                                placeholder="test"
-
-                        //inputValue={inputValue}
                                onSubmit={this.onSubmit}
-                               itemToStrong={this.itemToString}
-                    />
-                    <button onClick={this.loadData}>loadData</button>
-                    <button onClick={() => console.log(data[initialIndexValue].name)}>Test data state</button>
-                    <button onClick={() => console.log(data[indexValue].name,data[indexValue].measurement)}>Test data state now</button>
-                    <button onClick={() => console.log(this.SearchIndexByCountry(data, 'afghanistan'))}>Test function
-                    </button>
+                               itemToStrong={this.itemToString}/>
                     <Footer/>
                 </Grid>
             </div>

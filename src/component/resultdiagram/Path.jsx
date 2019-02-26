@@ -19,16 +19,19 @@ export default class Path extends  Component{
 
     d3Render() {
 
-        const { type,xScale,yScale,data } = this.props;
+        const {xScale,yScale,data } = this.props;
         const node = this.Path;
         const valueline = line().x((d) => {
             return xScale(d.year)}
         ).y((d) => {
+            //console.log("value",d.value)
             return yScale(d.value)});
 
+        //console.log('valueline',data)
         select(node.current).datum(data)
             .attr("class", "line")
             .attr("d", valueline);
+        //console.log(valueline)
     }
 
     render(){

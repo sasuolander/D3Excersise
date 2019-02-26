@@ -8,33 +8,43 @@ import {format} from "d3-format";
 import PropTypes from 'prop-types';
 import Path from './Path';
 import Axis from "./Axis";
+import Label from "./Label";
+
 export default class DefaultDiagram extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             xScale: scaleTime()
-                .rangeRound([0, this.props.widthUsed]).
-            domain(extent(this.props.data, (d) => {
-                return d.year
-            })),
+                .rangeRound([0, this.props.widthUsed])
+                .domain(extent(this.props.data, (d) => {
+                    return d.year
+                })),
             yScale: scaleLinear()
-                .rangeRound([this.props.heightUsed, 0]).
-            domain([0, max( this.props.data, (d) => {
-                return d.value
-            })]),
+                .rangeRound([this.props.heightUsed, 0])
+                /*.domain(extent(this.props.data, (d) => {
+                    return d.value
+                }))*/
+
+                .domain([0, max(this.props.data, (d) => {
+                    return d.value
+                })])
         };
         this.GMargin = React.createRef();
     }
 
-    static getDerivedStateFromProps(Props, State) {
-        let {xScale, yScale} = State;
+    static getDerivedStateFromProps(nextProps, State) {
+        const {xScale, yScale} = State;
         //console.log(nextProps.data)
-        xScale.domain(extent(Props.data, (d) => {
+        xScale.domain(extent(nextProps.data, (d) => {
             return d.year
         }));
-        yScale.domain([0, max(Props.data, (d) => {
-            return d.value
-        })]);
+        yScale
+            /*.domain(extent(nextProps.data, (d) => {
+                return d.value
+            }));*/
+
+            .domain([0, max(nextProps.data, (d) => {
+            return d.value})]);
         State = {...State, xScale, yScale};
         return State;
     }
@@ -42,30 +52,49 @@ export default class DefaultDiagram extends PureComponent {
     render() {
 
         const {xScale, yScale} = this.state,
-            {margin, heightUsed, data, height, width} = this.props;
+            {margin, heightUsed, widthUsed, data, height, width} = this.props,
+            xAxis = axisBottom(xScale)
+            //.ticks(data.length / 2)
+                .tickFormat(format("d")),
+            yAxis = axisLeft(yScale);
+        //console.log(data)
+        //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
             .attr('transform', 'translate('
-                + margin.left + ' ' + margin.right + ')');
-        const xAxis = axisBottom(xScale).ticks(data.length / 2).tickFormat(format("d"));
-        const yAxis = axisLeft(yScale);
+                + margin.left + ' ' + margin.right + ')')
         return (
             <svg width={width}
                  height={height}
                 //viewBox={"0 0 0 0"}
                 //transform={translate}
-                 ref={node => this.node = node}>
+                //ref={node => this.node = node}
+            >
                 <g ref={this.GMargin}>
                     <Axis x={0} y={0} scale={yScale}
                           call={yAxis}
                           type="Left"/>
                     <Axis x={0} y={heightUsed} scale={xScale}
                           call={xAxis}
-                          type="Bottom"/>
+                          type="Bottom"
+                    />
                     <Path
                         xScale={xScale}
                         yScale={yScale}
                         data={data}
                     />
+                    <Label
+                        position={"x"}
+                        width={widthUsed}
+                        height={heightUsed}
+                        margin={margin}
+                        labelX={"Years"}
+                    />
+                    <Label
+                        position={"y"}
+                        width={widthUsed}
+                        height={heightUsed}
+                        margin={margin}
+                        labelY={"C02 value"}/>
                 </g>
             </svg>
         );
