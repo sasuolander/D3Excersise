@@ -14,16 +14,16 @@ const API_URL = "https://gist.githubusercontent.com/sasuolander/54feb87d8a2ecf03
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = ({
+        this.state = {
             data: [],
             inputValue: '',
             indexValue: -1,
             initialIndexValue: 1,
             //standard d3 marginals and dimensions
-            margin: {top: 20, right: 0, bottom: 50, left: 70},
+            margin: {top: 20, right: 0, bottom: 10, left: 70},
             widthMargin: 960,
             heightMargin: 500,
-        });
+        };
     }
 
     componentDidUpdate() {
@@ -38,7 +38,7 @@ export default class App extends Component {
     }
 
     loadData = () => {
-        console.log("loadData() function load");
+        //console.log("loadData() function load");
         Axios.get(API_URL).then(res => {
             //console.log(res.data)
             const dataRes = res.data;
@@ -65,7 +65,7 @@ export default class App extends Component {
                 measurement: Object.keys(data) //Converting series of object into array and then removing duplicate data
                     .map((key) => {
                         return [String(key), data[key]]
-                    }).slice(0, 55  )
+                    }).slice(0, 55)
             }
         });
         return array
@@ -81,20 +81,34 @@ export default class App extends Component {
         inputData.forEach((obj) => {
             array.push({
                 year: obj[0],
-                value:obj[1],
+                value: obj[1],
             })
         });
         return array
     };
 
+    //https://codeburst.io/javascript-finding-minimum-and-maximum-
+    // values-in-an-array-of-objects-329c5c7e22a2
+    getMinY = (data) => {
+        try {
+            return data.reduce((max, p) => p.value > max ? p.value : max, data[0].value);
+
+        } catch (e) {
+            console.log('error', data)
+            console.log(e)
+        }
+    }
+    getMaxY = (data) => {
+        try {
+            return data.reduce((min, p) => p.value < min ? p.value : min, data[0].value);
+        } catch (e) {
+            console.log(e)
+        }
+    }
     onChange = (e) => {
         e.preventDefault()
-        //console.log("capture change");
     };
     handleChangeState = (e, downShiftState) => {
-        //e.preventDefault()
-        //console.log("capture change", e);
-        //console.log(downShiftState.inputValue);
         this.setState({
             inputValue: downShiftState.inputValue
         })
@@ -120,21 +134,31 @@ export default class App extends Component {
             MarginH = heightMargin - margin.top - margin.bottom,
             MarginWNegate = widthMargin + margin.left + margin.right,
             MarginHNegate = heightMargin + margin.top + margin.bottom;
+        let array = indexValue <= -1 ? this.createArrayForD3(data[initialIndexValue]) :
+            this.createArrayForD3(data[indexValue])
 
+        /*console.log(array);
+        console.log('ymin', this.getMinY(array))
+        console.log('ymax', this.getMaxY(array))*/
         const diagram = indexValue <= -1 ?
-            <DefaultDiagram test="test" data={this.createArrayForD3(data[initialIndexValue])}
+            <DefaultDiagram data={this.createArrayForD3(data[initialIndexValue])}
                             width={MarginWNegate}
                             height={MarginHNegate}
                             margin={margin}
                             heightUsed={MarginH}
                             widthUsed={MarginW}
+                            Ymin={this.getMinY(array)}
+                            Ymax={this.getMaxY(array)}
             /> :
-            <DefaultDiagram test="test" data={this.createArrayForD3(data[indexValue])}
+            <DefaultDiagram data={this.createArrayForD3(data[indexValue])}
                             width={MarginWNegate}
                             height={MarginHNegate}
                             margin={margin}
                             heightUsed={MarginH}
-                            widthUsed={MarginW}/>;
+                            widthUsed={MarginW}
+                            Ymin={this.getMinY(array)}
+                            Ymax={this.getMaxY(array)}
+            />;
         return (
             <div className="classes.root">
                 <Grid container justify='center'
@@ -148,10 +172,10 @@ export default class App extends Component {
                     <SearchBar data={data}
                                onChange={this.onChange}
                                onStateChange={this.handleChangeState}
-                               placeholder="test"
+                               placeholder="Write name of country"
                                onSubmit={this.onSubmit}
                                itemToStrong={this.itemToString}/>
-                    <Footer/>
+                    <Footer text={'Sasu Ölander'}/>
                 </Grid>
             </div>
         );

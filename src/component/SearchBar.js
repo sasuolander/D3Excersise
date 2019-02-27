@@ -1,6 +1,8 @@
 import React from 'react';
 import Downshift from 'downshift';
-
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Label from '@material-ui/core/'
 export const SearchBar = ({
                               data,
                               placeholder,
@@ -32,16 +34,16 @@ export const SearchBar = ({
                   itemToString,
               }) => (
                 <div>
-                    <form onSubmit={onSubmit}>
-                        <label {...getLabelProps()}>test</label> &nbsp;
-                        <input {...getInputProps({
+                    <form onSubmit={onSubmit} className={'form_country'}>
+                        <label {...getLabelProps()}>Search the country</label> &nbsp;
+                        <Input {...getInputProps({
                             isOpen,
                             onChange: onChange,
                             placeholder: placeholder //In DownShift you need to write everything
                             // inside props of downshift
                         })} />
                         <div className={'bt_border'}>
-                            <input type={'submit'} className={"bt_country"}/>
+                            <Input type={'submit'} className={"bt_country"}/>
                         </div>
                     </form>
                     {!isOpen ? null : (

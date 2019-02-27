@@ -15,17 +15,15 @@ export default class DefaultDiagram extends PureComponent {
         super(props);
         this.state = {
             xScale: scaleTime()
-                .rangeRound([0, this.props.widthUsed])
+                .range([0, this.props.widthUsed])
                 .domain(extent(this.props.data, (d) => {
                     return d.year
                 })),
             yScale: scaleLinear()
-                .rangeRound([this.props.heightUsed, 0])
-                /*.domain(extent(this.props.data, (d) => {
-                    return d.value
-                }))*/
+                .range([this.props.heightUsed, 0])
+                //.domain([this.props.Ymin,this.props.Ymax])
 
-                .domain([0, max(this.props.data, (d) => {
+               .domain([0, max(this.props.data, (d) => {
                     return d.value
                 })])
         };
@@ -42,7 +40,7 @@ export default class DefaultDiagram extends PureComponent {
             /*.domain(extent(nextProps.data, (d) => {
                 return d.value
             }));*/
-
+            //.domain([nextProps.Ymin,nextProps.Ymax])
             .domain([0, max(nextProps.data, (d) => {
             return d.value})]);
         State = {...State, xScale, yScale};
@@ -54,9 +52,10 @@ export default class DefaultDiagram extends PureComponent {
         const {xScale, yScale} = this.state,
             {margin, heightUsed, widthUsed, data, height, width} = this.props,
             xAxis = axisBottom(xScale)
-            //.ticks(data.length / 2)
+            .ticks(data.length / 2)
                 .tickFormat(format("d")),
-            yAxis = axisLeft(yScale);
+            yAxis = axisLeft(yScale)
+                .ticks(data.length / 2);
         //console.log(data)
         //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
@@ -69,6 +68,8 @@ export default class DefaultDiagram extends PureComponent {
                 //transform={translate}
                 //ref={node => this.node = node}
             >
+
+
                 <g ref={this.GMargin}>
                     <Axis x={0} y={0} scale={yScale}
                           call={yAxis}

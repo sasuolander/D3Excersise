@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const Footer = () => (<div className="footer"><p>footer</p></div>);
+export const Footer = ({text}) => (<div className="footer"><p>{text}</p></div>);

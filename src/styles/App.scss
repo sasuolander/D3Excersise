@@ -10,8 +10,8 @@
 }
 .bt_border{
   padding-left: 20px;
-  height:auto;
   display:inline-block;
+  position: center;
 }
 
 .path {
@@ -25,21 +25,4 @@
 .line {
   fill: none;
   stroke: black;
-}
-.diagram {
-  padding: 0 0 300px 20px;
-  text-align: center;
-
-}
-
-.axis--x {
-  padding: 0px 0px 0px 0px;
-  margin-left: auto;
-}
-.axis--y {
-  padding: 0 0 0 50px;
-}
-
-.testingFile {
-  color: aqua;
 }
