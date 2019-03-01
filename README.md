@@ -1,4 +1,8 @@
-Ohjeet
+intruction
 https://www.reaktor.com/ennakkotehtava-ohjelmistokehittaja/
-diagrammi
+diagram
 https://sasu-apps.herokuapp.com/
+
+
+example
+![example](picture.png)
