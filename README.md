@@ -1,6 +1,5 @@
-# intruction
-https://www.reaktor.com/ennakkotehtava-ohjelmistokehittaja/
-# diagram
+
+# Diagram
 https://sasu-apps.herokuapp.com/
 
 # ToDoList
@@ -10,6 +9,6 @@ https://sasu-apps.herokuapp.com/
 * Geo heatmap visualization, diagram
 * timeline
 
-# example
+# Pictures
 ![example](./picture.PNG)
 ![example](./picture2.PNG)
