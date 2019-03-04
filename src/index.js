@@ -9,10 +9,11 @@ import rootReducer from './component/redux/DatabasesReducers'
 import * as serviceWorker from './serviceWorker';
 
 const database = createStore(rootReducer)
+console.log(database.getState())
 
 ReactDOM.render(
     <Provider store={database}>
-    <App />
+    <App/>
     </Provider>
     , document.getElementById('root'))
 

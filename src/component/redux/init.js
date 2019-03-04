@@ -1,3 +1,4 @@
 export const datas=(state ={},action)=>{
-    return {}
+    const talo="ta";
+    return {talo}
 }
