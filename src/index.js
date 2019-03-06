@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import './styles/index.scss';
 import './styles/App.scss'
 import App from './App';
-import rootReducer from './component/redux/DatabasesReducers'
+import rootReducer from './component/redux/reducer/databasesReducers'
 import * as serviceWorker from './serviceWorker';
 
 const database = createStore(rootReducer)

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import {XScale,YScale} from './d3State'
-import {datas} from './init'
+import {data} from './data'
 
 export default combineReducers({
-    datas,
+    data,
     XScale,YScale
-})
+});
