@@ -8,6 +8,7 @@ https://sasu-apps.herokuapp.com/
 * multi line diagram, reference line,
 * Geo heatmap visualization, diagram
 * timeline
+* diagram when comparing one or two country in a limited time scale
 
 # Pictures
 ![example](./picture.PNG)
