@@ -1,18 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import './styles/index.scss';
 import './styles/App.scss'
 import App from './App';
-import rootReducer from './component/redux/reducer/databasesReducers'
 import * as serviceWorker from './serviceWorker';
-
-const database = createStore(rootReducer)
-console.log(database.getState())
+import store from "./component/redux/store";
 
 ReactDOM.render(
-    <Provider store={database}>
+    <Provider store={store}>
     <App/>
     </Provider>
     , document.getElementById('root'))

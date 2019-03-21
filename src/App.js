@@ -7,11 +7,16 @@ import Axios from 'axios';
 import {Footer} from './component/elements/Footer'
 import {Header} from './component/elements/Header'
 import {csvParse} from "d3-dsv";
+import {getdata} from "./component/redux/action/dataAction"
+import connect from "react-redux/es/connect/connect";
 //import {format} from 'd3-format'
 //import DefaultDiagramTest2 from "./component/resultdiagram/DefaultDiagramTest2";
 //global namespace
 const API_URL = "https://gist.githubusercontent.com/sasuolander/54feb87d8a2ecf03e32e5e03d61aaf2a/raw/30ee2a2e22dbeac645ae55b0df7aa2bdd59307c7/data.csv";
-export default class App extends Component {
+
+
+
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +39,7 @@ export default class App extends Component {
     }
 
     componentWillMount() {
+        this.props.getdata();
         this.loadData()
     }
 
@@ -181,3 +187,8 @@ export default class App extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+
+});
+export default connect(mapStateToProps,{getdata})(App)
