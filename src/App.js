@@ -100,15 +100,15 @@ class App extends Component {
             return data.reduce((max, p) => p.value > max ? p.value : max, data[0].value);
 
         } catch (e) {
-            console.log('error', data)
-            console.log(e)
+            //console.log('error', data)
+            //console.log(e)
         }
     }
     getMaxY = (data) => {
         try {
             return data.reduce((min, p) => p.value < min ? p.value : min, data[0].value);
         } catch (e) {
-            console.log(e)
+            //console.log(e)
         }
     }
     onChange = (e) => {

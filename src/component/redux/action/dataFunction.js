@@ -1,22 +1,24 @@
 import Axios from "axios";
 import {csvParse} from "d3-dsv";
 import {API_URL} from './../constant'
-export const loadDataMethod = (url) => {
+
+
+
+
+/*export const DataMethod = (url) => {
+    console.log("DataMethod() function load",url);
     //console.log("loadData() function load");
     Axios.get(url).then(res => {
-        //console.log(res.data)
+        console.log('response header',res.data);
         return res.data
     }).catch(err => {
         return console.log(err)
     });
-};
+};*/
 
-export const SearchIndexByCountry = (array, country) => {
-    const names = array.map((data) => data.name.toLowerCase());
-    return names.findIndex(name => name === country.toLowerCase());
-};
 
-export const createGeneralArray = (dataRes) => {
+
+export const GeneralArray = (dataRes) => {
     const array = csvParse(dataRes, (data) => {
         return {
             name: data.CountryName,
@@ -29,7 +31,13 @@ export const createGeneralArray = (dataRes) => {
                 }).slice(0, 55)
         }
     });
+    //console.log(array)
     return array
+};
+
+export const SearchIndexByCountry = (array, country) => {
+    const names = array.map((data) => data.name.toLowerCase());
+    return names.findIndex(name => name === country.toLowerCase());
 };
 
 export const createArrayForD3 = (data) => {
