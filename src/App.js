@@ -95,7 +95,7 @@ class App extends Component {
 
     //https://codeburst.io/javascript-finding-minimum-and-maximum-
     // values-in-an-array-of-objects-329c5c7e22a2
-    getMinY = (data) => {
+    /*getMinY = (data) => {
         try {
             return data.reduce((max, p) => p.value > max ? p.value : max, data[0].value);
 
@@ -110,7 +110,7 @@ class App extends Component {
         } catch (e) {
             //console.log(e)
         }
-    }
+    }*/
     onChange = (e) => {
         e.preventDefault()
     };
@@ -142,19 +142,20 @@ class App extends Component {
             MarginHNegate = heightMargin + margin.top + margin.bottom;
         let array = indexValue <= -1 ? this.createArrayForD3(data[initialIndexValue]) :
             this.createArrayForD3(data[indexValue])
-
+        console.log('data from redux',this.props.data)
         /*console.log(array);
         console.log('ymin', this.getMinY(array))
         console.log('ymax', this.getMaxY(array))*/
         const diagram = indexValue <= -1 ?
             <DefaultDiagram data={this.createArrayForD3(data[initialIndexValue])}
+                            indexValue={indexValue}
                             width={MarginWNegate}
                             height={MarginHNegate}
                             margin={margin}
                             heightUsed={MarginH}
                             widthUsed={MarginW}
-                            Ymin={this.getMinY(array)}
-                            Ymax={this.getMaxY(array)}
+                            /*Ymin={this.getMinY(array)}
+                            Ymax={this.getMaxY(array)}*/
             /> :
             <DefaultDiagram data={this.createArrayForD3(data[indexValue])}
                             width={MarginWNegate}
@@ -162,8 +163,8 @@ class App extends Component {
                             margin={margin}
                             heightUsed={MarginH}
                             widthUsed={MarginW}
-                            Ymin={this.getMinY(array)}
-                            Ymax={this.getMaxY(array)}
+                            /*Ymin={this.getMinY(array)}
+                            Ymax={this.getMaxY(array)}*/
             />;
         return (
             <div className="classes.root">
@@ -175,7 +176,7 @@ class App extends Component {
                     <Grid item xs='12'>
                         {diagram}
                     </Grid>
-                    <SearchBar data={data}
+                    <SearchBar data={this.props.data}
                                onChange={this.onChange}
                                onStateChange={this.handleChangeState}
                                placeholder="Write name of country"
@@ -189,6 +190,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+    data :state.data.CO2DataSet
 
 });
 export default connect(mapStateToProps,{getdata})(App)

@@ -50,7 +50,7 @@ export default class DefaultDiagram extends PureComponent {
     render() {
 
         const {xScale, yScale} = this.state,
-            {margin, heightUsed, widthUsed, data, height, width} = this.props,
+            {margin, heightUsed, widthUsed, data, height, width, } = this.props,
             xAxis = axisBottom(xScale)
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
@@ -68,8 +68,6 @@ export default class DefaultDiagram extends PureComponent {
                 //transform={translate}
                 //ref={node => this.node = node}
             >
-
-
                 <g ref={this.GMargin}>
                     <Axis x={0} y={0} scale={yScale}
                           call={yAxis}
@@ -104,3 +102,7 @@ export default class DefaultDiagram extends PureComponent {
 DefaultDiagram.PropsTypes = {
     data: PropTypes.array
 };
+
+const MapStateToProps = {
+
+}
