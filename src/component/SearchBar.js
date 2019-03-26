@@ -3,8 +3,15 @@ import Downshift from 'downshift';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Label from '@material-ui/core/'
-export const SearchBar = ({
-                              data,
+import connect from "react-redux/es/connect/connect";
+
+const mapStateToProps = state => ({
+    data :state.data.CO2DataSet
+
+});
+
+ const SearchBar = ({
+                                data,//Redux
                               placeholder,
                               onChange,
                               onClick,
@@ -77,3 +84,4 @@ export const SearchBar = ({
         </Downshift>
     )
 };
+export default connect(mapStateToProps)(SearchBar);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {SearchBar} from './component/SearchBar'
+import SearchBar from './component/SearchBar'
 //import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid';
 import DefaultDiagram from './component/resultdiagram/DefaultDiagram'
@@ -176,7 +176,7 @@ class App extends Component {
                     <Grid item xs='12'>
                         {diagram}
                     </Grid>
-                    <SearchBar data={this.props.data}
+                    <SearchBar
                                onChange={this.onChange}
                                onStateChange={this.handleChangeState}
                                placeholder="Write name of country"
