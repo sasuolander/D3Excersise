@@ -9,7 +9,6 @@ const mapStateToProps = state => ({
     data :state.data.CO2DataSet
 
 });
-
  const SearchBar = ({
                                 data,//Redux
                               placeholder,

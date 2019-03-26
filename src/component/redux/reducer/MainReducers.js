@@ -4,5 +4,6 @@ import data from './dataReducer'
 
 export default combineReducers({
     data,
+
     XScale,YScale
 });

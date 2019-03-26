@@ -1,7 +1,7 @@
 import Axios from "axios";
 import {API_URL} from './../constant'
 import {getData} from "./types";
-import {GeneralArray} from "./dataFunction";
+import {GeneralArray,createArrayForD3} from "./dataFunction";
 
 export const getdata = ()=>dispatch=>{
     try{
@@ -21,4 +21,8 @@ export const getdata = ()=>dispatch=>{
         console.log('error',e)
     }
 };
+
+export const ArrayForD3=()=>{
+    return null
+}
 

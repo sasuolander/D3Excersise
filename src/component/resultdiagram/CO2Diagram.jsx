@@ -9,8 +9,9 @@ import PropTypes from 'prop-types';
 import Path from './Path';
 import Axis from "./Axis";
 import Label from "./Label";
+import connect from "react-redux/es/connect/connect";
 
-export default class DefaultDiagram extends PureComponent {
+export default class CO2Diagram extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,9 +38,6 @@ export default class DefaultDiagram extends PureComponent {
             return d.year
         }));
         yScale
-            /*.domain(extent(nextProps.data, (d) => {
-                return d.value
-            }));*/
             //.domain([nextProps.Ymin,nextProps.Ymax])
             .domain([0, max(nextProps.data, (d) => {
             return d.value})]);
@@ -99,10 +97,13 @@ export default class DefaultDiagram extends PureComponent {
         );
     }
 }
-DefaultDiagram.PropsTypes = {
+CO2Diagram.PropsTypes = {
     data: PropTypes.array
 };
 
-const MapStateToProps = {
+const mapStateToProps = state => ({
+    //data :state.data.CO2DataSet
 
-}
+});
+
+//(connect(mapStateToProps)(CO2Diagram)
