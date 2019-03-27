@@ -1,8 +1,8 @@
 import React from 'react';
 import Downshift from 'downshift';
-import { withStyles } from '@material-ui/core/styles';
+//import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import Label from '@material-ui/core/'
+//import Label from '@material-ui/core/'
 import connect from "react-redux/es/connect/connect";
 
 const mapStateToProps = state => ({

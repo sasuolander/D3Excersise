@@ -3,7 +3,7 @@ import {API_URL} from './../constant'
 import {getData} from "./types";
 import {GeneralArray,createArrayForD3} from "./dataFunction";
 
-export const getdata = ()=>dispatch=>{
+export const getDataAction = ()=>dispatch=>{
     try{
         Axios.get(API_URL).then(res => {
             const array=GeneralArray(res.data);
@@ -22,7 +22,7 @@ export const getdata = ()=>dispatch=>{
     }
 };
 
-export const ArrayForD3=()=>{
+export const ArrayForD3=()=>dispatch=>{
     return null
 }
 

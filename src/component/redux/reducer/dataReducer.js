@@ -6,7 +6,7 @@ const initialState={
 };
 export default (state=initialState,action)=>{
     switch (action.type) {
-        case 'getData':
+        case getData:
             return{
                 ...state,
                 CO2DataSet:action.payload

@@ -7,7 +7,7 @@ import Axios from 'axios';
 import {Footer} from './component/elements/Footer'
 import {Header} from './component/elements/Header'
 import {csvParse} from "d3-dsv";
-import {getdata} from "./component/redux/action/dataAction"
+import {getDataAction} from "./component/redux/action/dataAction"
 import connect from "react-redux/es/connect/connect";
 //import {format} from 'd3-format'
 //import DefaultDiagramTest2 from "./component/resultdiagram/DefaultDiagramTest2";
@@ -28,7 +28,7 @@ class App extends Component {
         };
     }
     componentWillMount() {
-        this.props.getdata();
+        this.props.getDataAction();
         this.loadData()
     }
 
@@ -44,12 +44,6 @@ class App extends Component {
             return console.log(err)
         });
     };
-
-    SearchIndexByCountry = (array, country) => {
-        const names = array.map((data) => data.name.toLowerCase());
-        return names.findIndex(name => name === country.toLowerCase());
-    };
-
     createGeneralArray = (dataRes) => {
         const array = csvParse(dataRes, (data) => {
             return {
@@ -65,7 +59,6 @@ class App extends Component {
         });
         return array
     };
-
     createArrayForD3 = (data) => {
         if (data === undefined) {
             return 'error'
@@ -81,6 +74,11 @@ class App extends Component {
         });
         return array
     };
+
+    SearchIndexByCountry = (array, country) => {
+        const names = array.map((data) => data.name.toLowerCase());
+        return names.findIndex(name => name === country.toLowerCase());
+    };
     onChange = (e) => {
         e.preventDefault()
     };
@@ -89,7 +87,6 @@ class App extends Component {
             inputValue: downShiftState.inputValue
         })
     };
-
     onSubmit = (e) => {
         e.preventDefault()
         const {inputValue} = this.state,
@@ -160,4 +157,4 @@ class App extends Component {
 const mapStateToProps = state => ({
     data :state.data.CO2DataSet
 });
-export default connect(mapStateToProps,{getdata})(App)
+export default connect(mapStateToProps,{getDataAction})(App)
