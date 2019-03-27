@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
  const SearchBar = ({
                                 data,//Redux
                               placeholder,
-                              onChange,
+                              //onChange,
                               onClick,
                               inputValue,
                               itemToString,
@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
     // this might be redundant but it make code more readably
     return (
         <Downshift
-            //onChange={onChange}
+            //onChange={(e)=>e.preventDefault}
             //selectedItem={selectedItem}
             itemToString={itemToString}
             onStateChange={onStateChange}>
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
                         <label {...getLabelProps()}>Search the country</label> &nbsp;
                         <Input {...getInputProps({
                             isOpen,
-                            onChange: onChange,
+                            //onChange: onChange,
                             placeholder: placeholder //In DownShift you need to write everything
                             // inside props of downshift
                         })} />

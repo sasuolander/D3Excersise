@@ -1,4 +1,4 @@
-import {updateIndex} from './types'
+import {updateIndex,updateInput} from './types'
 
 export const updateIndexAction =(index)=>dispatch=>{
     dispatch({
@@ -6,4 +6,11 @@ export const updateIndexAction =(index)=>dispatch=>{
         payload:index
     })
 };
+
+export const updateInputAction=()=>dispatch=>{
+    dispatch({
+        type: updateInput,
+        payload:'d'
+    })
+}
 

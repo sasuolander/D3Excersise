@@ -1,4 +1,4 @@
-import {updateIndex} from './../action/types'
+import {updateIndex,updateInput} from './../action/types'
 
 const initialState={
     index:'',
@@ -12,6 +12,11 @@ export default  (state=initialState,action)=>{
                 ...state,
                 index:action.payload
             };
+        case updateInput:
+            return{
+                ...state,
+                inputValue: action.payload
+            }
         default:
             return state
     }

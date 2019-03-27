@@ -79,9 +79,6 @@ class App extends Component {
         const names = array.map((data) => data.name.toLowerCase());
         return names.findIndex(name => name === country.toLowerCase());
     };
-    onChange = (e) => {
-        e.preventDefault()
-    };
     handleChangeState = (e, downShiftState) => {
         this.setState({
             inputValue: downShiftState.inputValue
@@ -142,7 +139,7 @@ class App extends Component {
                         {diagram}
                     </Grid>
                     <SearchBar
-                               onChange={this.onChange}
+                               //onChange={this.onChange}
                                onStateChange={this.handleChangeState}
                                placeholder="Write name of country"
                                onSubmit={this.onSubmit}

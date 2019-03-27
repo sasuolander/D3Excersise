@@ -1,14 +1,13 @@
 import SearchBar from "./../../SearchBar"
+import mapDispatchToProps from "react-redux/es/connect/mapDispatchToProps";
 
 
 const SearchIndexByCountry = (array, country) => {
     const names = array.map((data) => data.name.toLowerCase());
     return names.findIndex(name => name === country.toLowerCase());
 };
-const onChange = (e) => {
-    e.preventDefault()
-};
 const handleChangeState = (e, downShiftState) => {
+
     this.setState({
         inputValue: downShiftState.inputValue
     })
@@ -26,3 +25,10 @@ const onSubmit = (e) => {
         console.log('errro', error)
     }
 };
+
+const mapDispatchToProps =dispatch=>{
+    return{
+        onSubmit:dispatch(),
+        handleChangeState:dispatch(),
+    }
+}
