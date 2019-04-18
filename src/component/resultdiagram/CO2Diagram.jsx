@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import Path from './Path';
 import Axis from "./Axis";
 import Label from "./Label";
-import connect from "react-redux/es/connect/connect";
 
 export default class CO2Diagram extends PureComponent {
     constructor(props) {
@@ -22,8 +21,6 @@ export default class CO2Diagram extends PureComponent {
                 })),
             yScale: scaleLinear()
                 .range([this.props.heightUsed, 0])
-                //.domain([this.props.Ymin,this.props.Ymax])
-
                .domain([0, max(this.props.data, (d) => {
                     return d.value
                 })])
@@ -33,12 +30,10 @@ export default class CO2Diagram extends PureComponent {
 
     static getDerivedStateFromProps(nextProps, State) {
         const {xScale, yScale} = State;
-        //console.log(nextProps.data)
         xScale.domain(extent(nextProps.data, (d) => {
             return d.year
         }));
         yScale
-            //.domain([nextProps.Ymin,nextProps.Ymax])
             .domain([0, max(nextProps.data, (d) => {
             return d.value})]);
         State = {...State, xScale, yScale};
@@ -53,18 +48,12 @@ export default class CO2Diagram extends PureComponent {
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
             yAxis = axisLeft(yScale)
-                //.ticks(data.length / 2);
-        //console.log(data)
-        //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
             .attr('transform', 'translate('
                 + margin.left + ' ' + margin.right + ')')
         return (
             <svg width={width}
                  height={height}
-                //viewBox={"0 0 0 0"}
-                //transform={translate}
-                //ref={node => this.node = node}
             >
                 <g ref={this.GMargin}>
                     <Axis x={0} y={0} scale={yScale}
@@ -98,12 +87,5 @@ export default class CO2Diagram extends PureComponent {
     }
 }
 CO2Diagram.PropsTypes = {
-    data: PropTypes.array
+    data: PropTypes.array.isRequired
 };
-
-const mapStateToProps = state => ({
-    //data :state.data.CO2DataSet
-
-});
-
-//(connect(mapStateToProps)(CO2Diagram)

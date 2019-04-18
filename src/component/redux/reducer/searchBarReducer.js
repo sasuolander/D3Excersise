@@ -1,8 +1,9 @@
 import {updateIndex,updateInput} from './../action/types'
 
 const initialState={
-    index:'',
+    
     inputValue: '',
+    indexValue: -1,
 };
 
 export default  (state=initialState,action)=>{
@@ -10,7 +11,7 @@ export default  (state=initialState,action)=>{
         case updateIndex:
             return{
                 ...state,
-                index:action.payload
+                indexValue:action.payload
             };
         case updateInput:
             return{

@@ -22,7 +22,13 @@ export const getDataAction = ()=>dispatch=>{
     }
 };
 
-export const ArrayForD3=()=>dispatch=>{
+export const ArrayForD3=(data)=>dispatch=>{
+
+    dispatch({
+        type:"d",
+        payload:data
+    })
+
     return null
 }
 

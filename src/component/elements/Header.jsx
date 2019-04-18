@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const Header = (props) => (<div><p>{props.title}</p></div>);
+export const Header = (props) => (<React.Fragment><p>{props.title}</p></React.Fragment>);

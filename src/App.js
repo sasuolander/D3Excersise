@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+//import {SearchBar} from './component/SearchBar'
 import SearchBar from './component/SearchBar'
 //import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +10,8 @@ import {Header} from './component/elements/Header'
 import {csvParse} from "d3-dsv";
 import {getDataAction} from "./component/redux/action/dataAction"
 import connect from "react-redux/es/connect/connect";
+import { updateInputAction } from './component/redux/action/searchBarAction';
+import { updateIndexAction } from './component/redux/action/searchBarAction';
 //import {format} from 'd3-format'
 //import DefaultDiagramTest2 from "./component/resultdiagram/DefaultDiagramTest2";
 //global namespace
@@ -17,9 +20,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            inputValue: '',
-            indexValue: -1,
             initialIndexValue: 1,
             //standard d3 marginals and dimensions
             margin: {top: 20, right: 0, bottom: 10, left: 70},
@@ -29,36 +29,8 @@ class App extends Component {
     }
     componentWillMount() {
         this.props.getDataAction();
-        this.loadData()
     }
-
-    loadData = () => {
-        //console.log("loadData() function load");
-        Axios.get(API_URL).then(res => {
-            //console.log(res.data)
-            const dataRes = res.data;
-            this.setState({
-                data: this.createGeneralArray(dataRes)
-            })
-        }).catch(err => {
-            return console.log(err)
-        });
-    };
-    createGeneralArray = (dataRes) => {
-        const array = csvParse(dataRes, (data) => {
-            return {
-                name: data.CountryName,
-                countryCode: data.CountryCode,
-                indicator: data.IndicatorName,
-                indicatorCode: data.IndicatorCode,
-                measurement: Object.keys(data) //Converting series of object into array and then removing duplicate data
-                    .map((key) => {
-                        return [String(key), data[key]]
-                    }).slice(0, 55)
-            }
-        });
-        return array
-    };
+    
     createArrayForD3 = (data) => {
         if (data === undefined) {
             return 'error'
@@ -80,36 +52,28 @@ class App extends Component {
         return names.findIndex(name => name === country.toLowerCase());
     };
     handleChangeState = (e, downShiftState) => {
-        this.setState({
-            inputValue: downShiftState.inputValue
-        })
+        const {updateInputAction} = this.props;
+        updateInputAction(downShiftState.inputValue)
     };
     onSubmit = (e) => {
         e.preventDefault()
-        const {inputValue} = this.state,
+        const {inputValue} = this.props,
             indexValueOfCountry = this.SearchIndexByCountry(this.props.data, inputValue)
         try {
-            this.setState(
-                {indexValue: indexValueOfCountry}
-            )
-            //this.forceUpdate()
+            const {updateIndexAction}= this.props;
+            updateIndexAction(indexValueOfCountry)
         } catch (error) {
             console.log('errro', error)
         }
     };
 
     render() {
-        const {data, indexValue, initialIndexValue, widthMargin, heightMargin, margin} = this.state,
+        const { initialIndexValue, widthMargin, heightMargin, margin} = this.state,
             MarginW = widthMargin - margin.left - margin.right,
             MarginH = heightMargin - margin.top - margin.bottom,
             MarginWNegate = widthMargin + margin.left + margin.right,
             MarginHNegate = heightMargin + margin.top + margin.bottom;
-        let array = indexValue <= -1 ? this.createArrayForD3(data[initialIndexValue]) :
-            this.createArrayForD3(data[indexValue])
-        //console.log('data from redux',this.props.data)
-        /*console.log(array);
-        console.log('ymin', this.getMinY(array))
-        console.log('ymax', this.getMaxY(array))*/
+            const {data,indexValue} = this.props;
         const diagram = indexValue <= -1 ?
             <CO2Diagram
                             data={this.createArrayForD3(data[initialIndexValue])}
@@ -152,6 +116,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    data :state.data.CO2DataSet
+    data :state.data.CO2DataSet,
+    inputValue:state.searchBar.inputValue,
+    indexValue:state.searchBar.indexValue
 });
-export default connect(mapStateToProps,{getDataAction})(App)
+export default connect(mapStateToProps,{getDataAction,updateInputAction,updateIndexAction})(App)

@@ -7,10 +7,10 @@ export const updateIndexAction =(index)=>dispatch=>{
     })
 };
 
-export const updateInputAction=()=>dispatch=>{
+export const updateInputAction=(input)=>dispatch=>{
     dispatch({
         type: updateInput,
-        payload:'d'
+        payload:input
     })
 }
 
