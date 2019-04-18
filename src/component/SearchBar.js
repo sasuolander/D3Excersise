@@ -1,34 +1,30 @@
 import React from 'react';
 import Downshift from 'downshift';
-import { withStyles } from '@material-ui/core/styles';
+//import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import Label from '@material-ui/core/'
-export const SearchBar = ({
-                              data,
-                              placeholder,
-                              onChange,
-                              onClick,
-                              inputValue,
-                              itemToString,
-                              onSubmit,
-                              onStateChange,
-                          }) => {
+//import Label from '@material-ui/core/'
+import connect from "react-redux/es/connect/connect";
+
+const mapStateToProps = state => ({
+    data :state.data.CO2DataSet
+
+});
+  const SearchBar = ({      data,//Redux
+                            placeholder,
+                            itemToString,
+                            onSubmit,
+                            onStateChange, }) => {
     const names = data.map((data) => data.name); // create array from data,
-    // this might be redundant but it make code more readably
     return (
         <Downshift
-            //onChange={onChange}
-            //selectedItem={selectedItem}
             itemToString={itemToString}
             onStateChange={onStateChange}>
             {({
                   getInputProps,
                   getItemProps,
                   isOpen,
-                  isActive,
                   inputValue,
                   selectedItem,
-                  clearSelection,
                   highlightedIndex,
                   getLabelProps,
                   itemToString,
@@ -38,7 +34,6 @@ export const SearchBar = ({
                         <label {...getLabelProps()}>Search the country</label> &nbsp;
                         <Input {...getInputProps({
                             isOpen,
-                            onChange: onChange,
                             placeholder: placeholder //In DownShift you need to write everything
                             // inside props of downshift
                         })} />
@@ -77,3 +72,4 @@ export const SearchBar = ({
         </Downshift>
     )
 };
+export default connect(mapStateToProps)(SearchBar)

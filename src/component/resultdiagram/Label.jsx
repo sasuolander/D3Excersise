@@ -34,6 +34,7 @@ export default class Label extends Component {
                     .style("text-anchor", "middle")
                     .text(labelY);
                 break;
+            default: 
         }
     };
 

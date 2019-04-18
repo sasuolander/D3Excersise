@@ -10,7 +10,7 @@ import Path from './Path';
 import Axis from "./Axis";
 import Label from "./Label";
 
-export default class DefaultDiagram extends PureComponent {
+export default class CO2Diagram extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,8 +21,6 @@ export default class DefaultDiagram extends PureComponent {
                 })),
             yScale: scaleLinear()
                 .range([this.props.heightUsed, 0])
-                //.domain([this.props.Ymin,this.props.Ymax])
-
                .domain([0, max(this.props.data, (d) => {
                     return d.value
                 })])
@@ -32,15 +30,10 @@ export default class DefaultDiagram extends PureComponent {
 
     static getDerivedStateFromProps(nextProps, State) {
         const {xScale, yScale} = State;
-        //console.log(nextProps.data)
         xScale.domain(extent(nextProps.data, (d) => {
             return d.year
         }));
         yScale
-            /*.domain(extent(nextProps.data, (d) => {
-                return d.value
-            }));*/
-            //.domain([nextProps.Ymin,nextProps.Ymax])
             .domain([0, max(nextProps.data, (d) => {
             return d.value})]);
         State = {...State, xScale, yScale};
@@ -50,26 +43,18 @@ export default class DefaultDiagram extends PureComponent {
     render() {
 
         const {xScale, yScale} = this.state,
-            {margin, heightUsed, widthUsed, data, height, width} = this.props,
+            {margin, heightUsed, widthUsed, data, height, width, } = this.props,
             xAxis = axisBottom(xScale)
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
             yAxis = axisLeft(yScale)
-                //.ticks(data.length / 2);
-        //console.log(data)
-        //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
             .attr('transform', 'translate('
                 + margin.left + ' ' + margin.right + ')')
         return (
             <svg width={width}
                  height={height}
-                //viewBox={"0 0 0 0"}
-                //transform={translate}
-                //ref={node => this.node = node}
             >
-
-
                 <g ref={this.GMargin}>
                     <Axis x={0} y={0} scale={yScale}
                           call={yAxis}
@@ -101,6 +86,6 @@ export default class DefaultDiagram extends PureComponent {
         );
     }
 }
-DefaultDiagram.PropsTypes = {
-    data: PropTypes.array
+CO2Diagram.PropsTypes = {
+    data: PropTypes.array.isRequired
 };
