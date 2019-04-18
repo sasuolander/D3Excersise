@@ -24,14 +24,10 @@ export default class Path extends  Component{
         const valueline = line().x((d) => {
             return xScale(d.year)}
         ).y((d) => {
-            //console.log("value",d.value)
             return yScale(d.value)});
-
-        //console.log('valueline',data)
         select(node.current).datum(data)
             .attr("class", "line")
             .attr("d", valueline);
-        //console.log(valueline)
     }
 
     render(){

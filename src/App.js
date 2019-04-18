@@ -1,21 +1,13 @@
 import React, {Component} from 'react'
-//import {SearchBar} from './component/SearchBar'
-import SearchBar from './component/SearchBar'
-//import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid';
-import CO2Diagram from './component/resultdiagram/CO2Diagram'
-import Axios from 'axios';
+import SearchBarElement from './component/elements/SearcBarElement'
 import {Footer} from './component/elements/Footer'
 import {Header} from './component/elements/Header'
-import {csvParse} from "d3-dsv";
+import Grid from '@material-ui/core/Grid';
+import CO2Diagram from './component/resultdiagram/CO2Diagram'
 import {getDataAction} from "./component/redux/action/dataAction"
 import connect from "react-redux/es/connect/connect";
 import { updateInputAction } from './component/redux/action/searchBarAction';
 import { updateIndexAction } from './component/redux/action/searchBarAction';
-//import {format} from 'd3-format'
-//import DefaultDiagramTest2 from "./component/resultdiagram/DefaultDiagramTest2";
-//global namespace
-const API_URL = "https://gist.githubusercontent.com/sasuolander/54feb87d8a2ecf03e32e5e03d61aaf2a/raw/30ee2a2e22dbeac645ae55b0df7aa2bdd59307c7/data.csv";
 class App extends Component {
     constructor(props) {
         super(props);
@@ -28,16 +20,16 @@ class App extends Component {
         };
     }
     componentWillMount() {
-        this.props.getDataAction();
+        const {getDataAction}=this.props;
+        getDataAction();
     }
     
     createArrayForD3 = (data) => {
         if (data === undefined) {
             return 'error'
         }
-        let inputData = data.measurement;
-        //console.log(data)
-        let array = [];
+        let inputData = data.measurement,
+         array = [];
         inputData.forEach((obj) => {
             array.push({
                 year: obj[0],
@@ -46,27 +38,6 @@ class App extends Component {
         });
         return array
     };
-
-    SearchIndexByCountry = (array, country) => {
-        const names = array.map((data) => data.name.toLowerCase());
-        return names.findIndex(name => name === country.toLowerCase());
-    };
-    handleChangeState = (e, downShiftState) => {
-        const {updateInputAction} = this.props;
-        updateInputAction(downShiftState.inputValue)
-    };
-    onSubmit = (e) => {
-        e.preventDefault()
-        const {inputValue} = this.props,
-            indexValueOfCountry = this.SearchIndexByCountry(this.props.data, inputValue)
-        try {
-            const {updateIndexAction}= this.props;
-            updateIndexAction(indexValueOfCountry)
-        } catch (error) {
-            console.log('errro', error)
-        }
-    };
-
     render() {
         const { initialIndexValue, widthMargin, heightMargin, margin} = this.state,
             MarginW = widthMargin - margin.left - margin.right,
@@ -102,12 +73,7 @@ class App extends Component {
                     <Grid item xs='12'>
                         {diagram}
                     </Grid>
-                    <SearchBar
-                               //onChange={this.onChange}
-                               onStateChange={this.handleChangeState}
-                               placeholder="Write name of country"
-                               onSubmit={this.onSubmit}
-                               itemToStrong={this.itemToString}/>
+                    <SearchBarElement />
                     <Footer text={'Sasu Ölander'}/>
                 </Grid>
             </div>

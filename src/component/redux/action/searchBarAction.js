@@ -13,4 +13,3 @@ export const updateInputAction=(input)=>dispatch=>{
         payload:input
     })
 }
-

@@ -1,7 +1,6 @@
 import {updateIndex,updateInput} from './../action/types'
 
 const initialState={
-    
     inputValue: '',
     indexValue: -1,
 };

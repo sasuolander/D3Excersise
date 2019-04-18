@@ -1,22 +1,4 @@
-import Axios from "axios";
 import {csvParse} from "d3-dsv";
-import {API_URL} from './../constant'
-
-
-
-
-/*export const DataMethod = (url) => {
-    console.log("DataMethod() function load",url);
-    //console.log("loadData() function load");
-    Axios.get(url).then(res => {
-        console.log('response header',res.data);
-        return res.data
-    }).catch(err => {
-        return console.log(err)
-    });
-};*/
-
-
 
 export const GeneralArray = (dataRes) => {
     const array = csvParse(dataRes, (data) => {
@@ -31,7 +13,6 @@ export const GeneralArray = (dataRes) => {
                 }).slice(0, 55)
         }
     });
-    //console.log(array)
     return array
 };
 

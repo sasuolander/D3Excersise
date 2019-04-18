@@ -44,5 +44,4 @@ export default class Label extends Component {
             </text>
         )
     }
-
 }

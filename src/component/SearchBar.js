@@ -6,9 +6,7 @@ import Input from '@material-ui/core/Input';
 import connect from "react-redux/es/connect/connect";
 
 const mapStateToProps = state => ({
-    data :state.data.CO2DataSet
-
-});
+    data :state.data.CO2DataSet});
   const SearchBar = ({      data,//Redux
                             placeholder,
                             itemToString,

@@ -31,4 +31,3 @@ export const ArrayForD3=(data)=>dispatch=>{
 
     return null
 }
-
