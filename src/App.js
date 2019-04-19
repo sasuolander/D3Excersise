@@ -68,9 +68,9 @@ class App extends Component {
                 <Grid container justify='center'
                       direction='column'
                       alignItems='center'
-                      spacing='24'>
+                      spacing={24}>
                     <Header title='CO2 value'/>
-                    <Grid item xs='12'>
+                    <Grid item xs={12}>
                         {diagram}
                     </Grid>
                     <SearchBarElement />
