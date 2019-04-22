@@ -36,3 +36,21 @@ export const createArrayForD3 = (data) => {
     });
     return array
 };
+
+const promise =  new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+})
+
+
+export async function minvalue (data){
+    return new Promise((resolve, reject) => {
+    console.log(data)
+    return data.reduce((min, p) => p.value < min ? p.value : min, data[0].value);
+})}
+export async function maxvalue(data){
+     return new Promise((resolve, reject) => {
+        return data.reduce((max, p) => p.value > max ? p.value : max, data[0].value);
+    })}
+    
+     
+    

@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import Path from './Path';
 import Axis from "./Axis";
 import Label from "./Label";
+import {minvalue, maxvalue} from "./../redux/action/dataFunction"
+
 
 export default class CO2Diagram extends PureComponent {
     constructor(props) {
@@ -21,12 +23,15 @@ export default class CO2Diagram extends PureComponent {
                 })),
             yScale: scaleLinear()
                 .range([this.props.heightUsed, 0])
-               .domain([0, max(this.props.data, (d) => {
+               .domain([minvalue(this.props.data), max(this.props.data, (d) => {
                     return d.value
                 })])
         };
         this.GMargin = React.createRef();
     }
+//minvalue()
+
+
 
     static getDerivedStateFromProps(nextProps, State) {
         const {xScale, yScale} = State;
@@ -34,7 +39,7 @@ export default class CO2Diagram extends PureComponent {
             return d.year
         }));
         yScale
-            .domain([0, max(nextProps.data, (d) => {
+            .domain([minvalue(nextProps.data), max(nextProps.data, (d) => {
             return d.value})]);
         State = {...State, xScale, yScale};
         return State;
@@ -48,6 +53,9 @@ export default class CO2Diagram extends PureComponent {
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
             yAxis = axisLeft(yScale)
+                //.ticks(data.length / 2);
+        //console.log(data)
+        //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
             .attr('transform', 'translate('
                 + margin.left + ' ' + margin.right + ')')
