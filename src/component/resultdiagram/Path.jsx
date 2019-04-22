@@ -28,7 +28,6 @@ export default class Path extends  Component{
         select(node.current).datum(data)
             .attr("class", "line")
             .attr("d", (d)=>{
-                console.log(d)
                 return valueline(d)});
     }
 

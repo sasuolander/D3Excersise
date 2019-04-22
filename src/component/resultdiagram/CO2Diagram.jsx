@@ -23,7 +23,7 @@ export default class CO2Diagram extends PureComponent {
                 })),
             yScale: scaleLinear()
                 .range([this.props.heightUsed, 0])
-               .domain([minvalue(this.props.data), max(this.props.data, (d) => {
+               .domain([0, max(this.props.data, (d) => {
                     return d.value
                 })])
         };
@@ -39,7 +39,7 @@ export default class CO2Diagram extends PureComponent {
             return d.year
         }));
         yScale
-            .domain([minvalue(nextProps.data), max(nextProps.data, (d) => {
+            .domain([0, max(nextProps.data, (d) => {
             return d.value})]);
         State = {...State, xScale, yScale};
         return State;
@@ -53,9 +53,6 @@ export default class CO2Diagram extends PureComponent {
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
             yAxis = axisLeft(yScale)
-                //.ticks(data.length / 2);
-        //console.log(data)
-        //console.log(max(data, (d) => {return d.value}));
         select(this.GMargin.current)
             .attr('transform', 'translate('
                 + margin.left + ' ' + margin.right + ')')
