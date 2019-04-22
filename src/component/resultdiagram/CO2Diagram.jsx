@@ -48,6 +48,7 @@ export default class CO2Diagram extends PureComponent {
             .ticks(data.length / 2)
                 .tickFormat(format("d")),
             yAxis = axisLeft(yScale)
+            
         select(this.GMargin.current)
             .attr('transform', 'translate('
                 + margin.left + ' ' + margin.right + ')')
