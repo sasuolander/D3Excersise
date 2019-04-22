@@ -33,7 +33,7 @@ class App extends Component {
         inputData.forEach((obj) => {
             array.push({
                 year: obj[0],
-                value: obj[1],
+                value: obj[1]!==''?parseInt(obj[1]):'0',
             })
         });
         return array
