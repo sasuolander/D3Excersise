@@ -18,9 +18,8 @@ export default class Axis extends Component {
     d3Render() {
         const node = this.GAxis;
         select(node.current)
-        //.attr("class", "axis--x")
             .call(this.props.call);
-        //.call([`axis${type}`](this.props.scale));
+       
     }
 
     render() {

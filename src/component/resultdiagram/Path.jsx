@@ -27,7 +27,9 @@ export default class Path extends  Component{
             return yScale(d.value)});
         select(node.current).datum(data)
             .attr("class", "line")
-            .attr("d", valueline);
+            .attr("d", (d)=>{
+                console.log(d)
+                return valueline(d)});
     }
 
     render(){
