@@ -1,17 +1,23 @@
 import { csvParse } from "d3-dsv";
 
 export const GeneralArray = dataRes => {
+
+
   const array = csvParse(dataRes, data => {
     return {
       name: data.CountryName,
       countryCode: data.CountryCode,
       indicator: data.IndicatorName,
       indicatorCode: data.IndicatorCode,
-      measurement: Object.keys(data) //Converting series of object into array and then removing duplicate data
+      measurement: createArrayForD3(
+        Object.keys(data) //Converting series of object into array and then removing duplicate data
         .map(key => {
           return [String(key), data[key]];
         })
         .slice(0, 55)
+
+      )
+      
     };
   });
   return array;
@@ -26,9 +32,8 @@ export const  createArrayForD3 = (data) => {
     if (data === undefined) {
         return 'error'
     }
-    let inputData = data.measurement,
-     array = [];
-    inputData.forEach((obj) => {
+     let array = [];
+    data.forEach((obj) => {
         array.push({
             year: obj[0],
             value: obj[1]!==''?parseInt(obj[1]):'0',

@@ -51,6 +51,7 @@ export default class CO2Diagram extends PureComponent {
   }
 
   render() {
+    console.log(this.props.data)
     const { xScale, yScale } = this.state,
       { margin, heightUsed, widthUsed, data, height, width } = this.props,
       xAxis = axisBottom(xScale)

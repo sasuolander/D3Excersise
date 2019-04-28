@@ -2,7 +2,7 @@ import { updateIndex, updateInput } from "./../action/types";
 
 const initialState = {
   inputValue: "",
-  indexValue: -1
+  indexValue: 1
 };
 
 export default (state = initialState, action) => {

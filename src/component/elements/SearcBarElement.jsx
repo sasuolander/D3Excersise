@@ -4,6 +4,8 @@ import SearchBar from "./../SearchBar";
 import connect from "react-redux/es/connect/connect";
 import { updateInputAction } from "./../redux/action/searchBarAction";
 import { updateIndexAction } from "./../redux/action/searchBarAction";
+import { getDataAction } from "../redux/action/dataAction";
+
 
 class SearchBarElement extends Component {
   constructor(props) {
@@ -15,20 +17,22 @@ class SearchBarElement extends Component {
     return names.findIndex(name => name === country.toLowerCase());
   };
   handleChangeState = (e, downShiftState) => {
-    const { updateInputAction } = this.props;
-    updateInputAction(downShiftState.inputValue);
+    const { updateInput } = this.props;
+    updateInput(downShiftState.inputValue);
   };
   onSubmit = e => {
     e.preventDefault();
     const { inputValue, data } = this.props,
       indexValueOfCountry = this.SearchIndexByCountry(data, inputValue);
     try {
-      const { updateIndexAction } = this.props;
-      updateIndexAction(indexValueOfCountry);
+      const { updateIndex } = this.props;
+      updateIndex(indexValueOfCountry);
     } catch (error) {
       console.log("Failed to update state", error);
     }
   };
+
+ 
 
   render() {
     return (
@@ -48,7 +52,13 @@ const mapStateToProps = state => ({
   indexValue: state.searchBar.indexValue
 });
 
+const  mapDispatchToProps = dispatch => ({
+    updateInput: (input) => dispatch(updateInputAction(input)),
+    updateIndex: (index) => dispatch(updateIndexAction(index)),
+    getData: () => dispatch(getDataAction())
+});
+
 export default connect(
   mapStateToProps,
-  { updateInputAction, updateIndexAction }
+  mapDispatchToProps
 )(SearchBarElement);
