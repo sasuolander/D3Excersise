@@ -6,14 +6,14 @@ import './styles/App.scss'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from "./component/redux/store";
-import {BrowserRouter as Router} from 'react-router-dom'
+//import {BrowserRouter as Router} from 'react-router-dom'
 
 ReactDOM.render(
-    <Router>
+    //<Router>
         <Provider store={store}>
         <App/>
         </Provider>
-    </Router>
+    //</Router>
     , document.getElementById('root'))
 
 ;
