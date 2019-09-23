@@ -49,6 +49,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "redux-devtools-extension": "^2.13.8"
   }
 }
