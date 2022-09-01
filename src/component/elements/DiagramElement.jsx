@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import CO2Diagram from "./../resultdiagram/CO2Diagram";
 import { getDataAction } from "./../redux/action/dataAction";
 import connect from "react-redux/es/connect/connect";
-import { stat } from "fs";
 import {Loading} from "./Loading"
 
 class DiagramElement extends Component {
@@ -17,28 +16,23 @@ class DiagramElement extends Component {
           loaded: false
         };
       }
-
       
-
-
       renderDiagram(){
-        const { data, indexValue,completed,loading } = this.props;
-        console.log(data)
-        const {  widthMargin, heightMargin, margin } = this.state,
-      MarginW = widthMargin - margin.left - margin.right,
-      MarginH = heightMargin - margin.top - margin.bottom,
-      MarginWNegate = widthMargin + margin.left + margin.right,
-      MarginHNegate = heightMargin + margin.top + margin.bottom;
-
+        const { data, indexValue,completed,loading } = this.props,
+              {  widthMargin, heightMargin, margin } = this.state,
+              marginW = widthMargin - margin.left - margin.right,
+              marginH = heightMargin - margin.top - margin.bottom,
+              marginWNegate = widthMargin + margin.left + margin.right,
+              marginHNegate = heightMargin + margin.top + margin.bottom;
         return  !loading&&completed&& data<=1?
         (<CO2Diagram
           data={data[indexValue].measurement}
           indexValue={indexValue}
-          width={MarginWNegate}
-          height={MarginHNegate}
+          width={marginWNegate}
+          height={marginHNegate}
           margin={margin}
-          heightUsed={MarginH}
-          widthUsed={MarginW}
+          heightUsed={marginH}
+          widthUsed={marginW}
         />):(null);
 
       }

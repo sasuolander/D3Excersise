@@ -12,9 +12,8 @@ class SearchBarElement extends Component {
     super(props);
   }
 
-  SearchIndexByCountry = (array, country) => {
-    const names = array.map(data => data.name.toLowerCase());
-    return names.findIndex(name => name === country.toLowerCase());
+  searchIndexByCountry = (array, country) => {
+    return array.map(data => data.name.toLowerCase()).findIndex(name => name === country.toLowerCase());
   };
   handleChangeState = (e, downShiftState) => {
     const { updateInput } = this.props;
@@ -23,7 +22,7 @@ class SearchBarElement extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { inputValue, data } = this.props,
-      indexValueOfCountry = this.SearchIndexByCountry(data, inputValue);
+          indexValueOfCountry = this.searchIndexByCountry(data, inputValue);
     try {
       const { updateIndex } = this.props;
       updateIndex(indexValueOfCountry);
@@ -32,15 +31,13 @@ class SearchBarElement extends Component {
     }
   };
 
- 
-
   render() {
     return (
       <SearchBar
         onStateChange={this.handleChangeState}
         placeholder="Write the name of country"
         onSubmit={this.onSubmit}
-        itemToStrong={this.itemToString}
+        itemToString={this.itemToString}
       />
     );
   }

@@ -34,8 +34,8 @@ const SearchBar = ({
             <Input
               {...getInputProps({
                 isOpen,
-                placeholder: placeholder //In DownShift you need to write everything
-                // inside props of downshift
+                placeholder: placeholder  //In DownShift you need to write everything
+                                          // inside props of downshift
               })}
             />
             <div className={"bt_border"}>
